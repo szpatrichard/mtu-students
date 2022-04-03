@@ -1,0 +1,31 @@
+{
+	// IntelliSense használata a lehetséges attribútumok listázásához
+	// Húzza fölé az egeret a létező attribútumok leírásának megtekintéséhez!
+	// További információért látogassa meg a következőt: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Launch Stat",
+			"request": "launch",
+			"mainClass": "mtu_student_app.Stat",
+			"projectName": "MTU_Student_App_bab28396"
+		},
+		{
+			"type": "java",
+			"name": "Launch AboutPopup",
+			"request": "launch",
+			"mainClass": "mtu_student_app.views.AboutPopup",
+			"projectName": "MTU_Student_App_bab28396",
+			"vmArgs": "--module-path \"C:\\Program Files\\Java\\javafx-sdk-18\\lib\" --add-modules javafx.controls,javafx.fxml"
+		},
+		{
+			"type": "java",
+			"name": "Launch MTU Student App",
+			"request": "launch",
+			"mainClass": "mtu_student_app.App",
+			"projectName": "MTU_Student_App_bab28396",
+			"vmArgs": "--module-path \"C:\\Program Files\\Java\\javafx-sdk-18\\lib\" --add-modules javafx.controls,javafx.fxml"
+		}
+	]
+}

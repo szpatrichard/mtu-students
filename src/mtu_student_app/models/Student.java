@@ -1,23 +1,21 @@
 package mtu_student_app.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+
+import college.College;
 
 /**
  * Schema for student.
  * 
  * @author Patrik Richard Szilagyi R00198735
  */
-public class Student {
+public class Student implements Serializable {
     /* Attributes */
     private String name,
             studentId;
     private LocalDate dob;
-    /* HashMap with module as key and the grade as value */
-    private final HashMap<Module, Integer> results;
+    private College college;
 
     /**
      * Student Constructor.
@@ -30,7 +28,13 @@ public class Student {
         this.name = name;
         this.studentId = studentId;
         this.dob = dob;
-        this.results = new HashMap<>();
+    }
+
+    public Student(String name, String studentId, LocalDate dob, College college) {
+        this.name = name;
+        this.studentId = studentId;
+        this.dob = dob;
+        this.college = college;
     }
 
     /**
@@ -87,37 +91,12 @@ public class Student {
         this.dob = dob;
     }
 
-    /**
-     * Gets the results of the modules the student is enrolled in.
-     */
-    public HashMap<Module, Integer> getResults() {
-        return this.results;
+    public College getCollege() {
+        return this.college;
     }
 
-    /**
-     * Adds the result of a module the student is enrolled in.
-     * 
-     * @param module A Module object
-     * @param grade  The grade the student achieved in the module
-     */
-    public void addResults(Module module, int grade) {
-        getResults().put(module, grade);
-    }
-
-    /**
-     * TODO: Sorts the results by the module's title.
-     */
-    public void sortModules() {
-        List<Module> gradesByKey = new ArrayList<>(results.keySet());
-        // Collections.sort(gradesByKey);
-    }
-
-    /**
-     * TODO: Sorts the results by the achieved grade.
-     */
-    public void sortGrades() {
-        List<Integer> gradesByValue = new ArrayList<>(results.values());
-        Collections.sort(gradesByValue);
+    public void setCollege(College college) {
+        this.college = college;
     }
 
     /**
@@ -125,7 +104,12 @@ public class Student {
      * 
      * @return Details of a student as a formatted string
      */
+    @Override
     public String toString() {
-        return String.format("Student %s with ID %S", this.name, this.studentId);
+        return "{" +
+                " name='" + getName() + "'" +
+                ", studentId='" + getStudentId() + "'" +
+                ", dob='" + getDob() + "'" +
+                "}";
     }
 }

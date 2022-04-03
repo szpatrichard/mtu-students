@@ -17,7 +17,8 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mtu_student_app.App;
-import mtu_student_app.models.Module;
+import mtu_student_app.models.Record;
+import mtu_student_app.models.Student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,10 +114,14 @@ public class AddGradeForm {
         String errorMsg;
         if (studentsBox.getSelectionModel().getSelectedIndex() != -1 &&
                 studentModulesBox.getSelectionModel().getSelectedIndex() != -1) {
-            errorMsg = App.studentControl.addResult(
-                    studentsBox.getValue(),
-                    studentModulesBox.getValue(),
-                    gradeInput.getText());
+            try {
+                errorMsg = App.recordControl.addGrade(
+                        studentsBox.getValue(),
+                        studentModulesBox.getValue(),
+                        Integer.parseInt(gradeInput.getText()));
+            } catch (NumberFormatException nfe) {
+                errorMsg = "Invalid grade format.";
+            }
             if (errorMsg == null)
                 stage.close();
         } else {
@@ -132,14 +137,12 @@ public class AddGradeForm {
      */
     private static void getStudentModules(String studentName) {
         if (!studentName.isBlank()) {
+            Student student = App.studentControl.getList().getStudentByName(studentName);
             studentModulesList = FXCollections.observableArrayList();
             studentModulesBox.setItems(studentModulesList);
-            for (Module module : App.studentControl
-                    .getList()
-                    .getStudentByName(studentName)
-                    .getResults()
-                    .keySet())
-                studentModulesList.add(module.getTitle());
+            for (Record record : App.recordControl.getList().getRecords(student)) {
+                studentModulesList.add(record.getModule().getTitle());
+            }
         }
     }
 }

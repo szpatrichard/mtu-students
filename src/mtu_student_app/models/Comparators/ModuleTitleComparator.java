@@ -2,13 +2,13 @@ package mtu_student_app.models.Comparators;
 
 import java.util.Comparator;
 
-import mtu_student_app.models.Module;
+import mtu_student_app.models.Record;
 
-public class ModuleTitleComparator implements Comparator<Module> {
+public class ModuleTitleComparator implements Comparator<Record> {
     @Override
-    public int compare(Module m1, Module m2) {
-        String mt1 = m1.getTitle();
-        String mt2 = m2.getTitle();
+    public int compare(Record r1, Record r2) {
+        String mt1 = r1.getModule().getTitle();
+        String mt2 = r2.getModule().getTitle();
         return mt1.compareTo(mt2);
     }
 }

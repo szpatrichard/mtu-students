@@ -1,17 +1,22 @@
 package mtu_student_app.models;
 
+import java.io.Serializable;
+
+import college.Department;
+
 /**
  * Schema representing a module.
  * 
  * @author Patrik Richard Szilagyi R00198735
  */
-public class Module {
+public class Module implements Serializable {
     /* Attributes */
     private String code;
     private String title;
+    private Department department;
 
     /**
-     * Module Constructor
+     * Module Constructor.
      * 
      * @param code  Module's code
      * @param title Module's Title
@@ -19,6 +24,12 @@ public class Module {
     public Module(String code, String title) {
         this.code = code;
         this.title = title;
+    }
+
+    public Module(String code, String title, Department department) {
+        this.code = code;
+        this.title = title;
+        this.department = department;
     }
 
     /**
@@ -57,10 +68,22 @@ public class Module {
         this.title = title;
     }
 
+    public Department getDepartment() {
+        return this.department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     /**
      * Converts Module class into a string.
      */
+    @Override
     public String toString() {
-        return String.format("%S - %s", getCode(), getTitle());
+        return "{" +
+                " code='" + getCode() + "'" +
+                ", title='" + getTitle() + "'" +
+                "}";
     }
 }

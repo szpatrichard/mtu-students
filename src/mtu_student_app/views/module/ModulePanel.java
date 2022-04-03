@@ -104,13 +104,13 @@ public class ModulePanel extends Tab {
      * Displays a form to a register a student's for a module.
      */
     private void registerModule() {
-        App.studentControl.showRegisterForModuleForm();
+        App.recordControl.showRegisterForModuleForm();
     }
 
     /**
      * Displays a form to add a student's grade to their enrolled module.
      */
     private void addGrade() {
-        App.studentControl.showAddGradeForm();
+        App.recordControl.showAddGradeForm();
     }
 }

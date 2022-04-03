@@ -103,9 +103,9 @@ public class RegisterForModuleForm {
      */
     private static void registerStudentForModule() {
         String errorMsg;
-        if (studentsBox.getSelectionModel().getSelectedIndex() >= 0 ||
-                modulesBox.getSelectionModel().getSelectedIndex() >= 0) {
-            errorMsg = App.studentControl.registerModule(
+        if (studentsBox.getSelectionModel().getSelectedIndex() != -1 &&
+                modulesBox.getSelectionModel().getSelectedIndex() != -1) {
+            errorMsg = App.recordControl.registerModule(
                     studentsBox.getValue(),
                     modulesBox.getValue());
             if (errorMsg == null)

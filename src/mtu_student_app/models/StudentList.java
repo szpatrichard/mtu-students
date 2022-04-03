@@ -1,17 +1,23 @@
 package mtu_student_app.models;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Class used to store the records of students, serving as the database of the
- * application.
+ * Class used to store the records of students.
  * 
  * @author Patrik Richard Szilagyi R00198735
  */
-public class StudentList {
+public class StudentList implements Serializable {
     /* Attributes */
     // ArrayList for storing the details of students
-    private final ArrayList<Student> students;
+    private ArrayList<Student> students;
 
     /**
      * StudentList Constructor.
@@ -26,7 +32,7 @@ public class StudentList {
      * @return An ArrayList with the details of the students.
      */
     public ArrayList<Student> getStudents() {
-        return students;
+        return this.students;
     }
 
     /**
@@ -43,8 +49,7 @@ public class StudentList {
      * Gets a particular students based on their student ID.
      * 
      * @param id Student's ID
-     * @return A Student
-     *         bject
+     * @return A Student object
      */
     public Student getStudentById(String id) {
         for (Student student : getStudents()) {
@@ -68,7 +73,7 @@ public class StudentList {
     }
 
     /**
-     * Adds a student to the students ArrayList
+     * Adds a student to the students ArrayList.
      * 
      * @param student A Student object
      */
@@ -92,5 +97,34 @@ public class StudentList {
      */
     public int length() {
         return getStudents().size();
+    }
+
+    public String writeObject() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("data/students");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(students);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.close();
+            return null;
+        } catch (IOException ie) {
+            return "Can't write students to file.";
+        }
+    }
+
+    public String readObject() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("data/students");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            students = (ArrayList<Student>) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+            return null;
+        } catch (FileNotFoundException e) {
+            return "File cannot be found. Missing \"students\" in data folder.";
+        } catch (ClassNotFoundException | IOException e) {
+            return "Can't read students from file.";
+        }
     }
 }

@@ -1,5 +1,7 @@
 package mtu_student_app;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -12,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mtu_student_app.controllers.ModuleController;
+import mtu_student_app.controllers.RecordController;
 import mtu_student_app.controllers.StudentController;
 import mtu_student_app.views.modal.MessageModal;
 import mtu_student_app.views.module.ModulePanel;
@@ -33,6 +36,7 @@ public class App extends Application {
             modulesList = FXCollections.observableArrayList();
     public static final StudentController studentControl = new StudentController();
     public static final ModuleController moduleControl = new ModuleController();
+    public static final RecordController recordControl = new RecordController();
     public static boolean changesMade = false;
 
     private final String title = "MTU Student App";
@@ -88,6 +92,9 @@ public class App extends Application {
 
     /**
      * Load students, modules and results into application.
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     private void load() {
         String studentLoadMsg = studentControl
@@ -96,9 +103,9 @@ public class App extends Application {
         String moduleLoadMsg = moduleControl
                 .loadList(
                         moduleControl.getList().getModules());
-        String resultLoadMsg = studentControl
-                .loadResults(
-                        studentControl.getList().getStudents());
+        String resultLoadMsg = recordControl
+                .loadList(
+                        recordControl.getList().getRecords());
 
         MessageModal.display(studentLoadMsg, root);
         MessageModal.display(moduleLoadMsg, root);
@@ -107,11 +114,13 @@ public class App extends Application {
 
     /**
      * Save students, modules and results.
+     * 
+     * @throws IOException
      */
     private void save() {
         studentControl.saveList();
-        studentControl.saveResults();
         moduleControl.saveList();
+        recordControl.saveList();
         changesMade = false;
     }
 

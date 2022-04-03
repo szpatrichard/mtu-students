@@ -1,6 +1,5 @@
 package mtu_student_app.controllers;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +26,7 @@ public class ModuleController {
     }
 
     /**
-     * Gets the entire record of modules in a list.
+     * Gets the list of modules.
      * 
      * @return ModuleList containing details of students
      */
@@ -79,16 +78,11 @@ public class ModuleController {
      * @return An error message
      */
     public String saveList() {
-        try {
-            PrintWriter output = new PrintWriter("data/modules.txt");
-            ArrayList<Module> list = getList().getModules();
-            for (Module module : list)
-                output.printf("%s,%s%n", module.getCode(), module.getTitle());
-            output.close();
+        String err = getList().writeObject();
+        if (err == null) {
             return "Modules have been saved to file successfully.";
-        } catch (FileNotFoundException e) {
-            return "File with the modules cannot be found. No \"modules.txt\" in data folder.";
-        }
+        } else
+            return "An error occurred while saving modules.";
     }
 
     /**
@@ -98,33 +92,14 @@ public class ModuleController {
      * @return An error message
      */
     public String loadList(ArrayList<Module> moduleList) {
-        try {
-            /* Clear lists */
-            moduleList.clear();
+        String err = getList().readObject();
+        if (err == null) {
             App.modulesList.clear();
-            /* Read from file */
-            FileReader fileReader = new FileReader("data/modules.txt");
-            BufferedReader inputFile = new BufferedReader(fileReader);
-            String line = inputFile.readLine();
-            moduleList.clear();
-            while (line != null) {
-                /* Get data from each line in the file */
-                String[] data = line.split(",");
-                /* Create a new module object */
-                Module module = new Module(data[0], data[1]);
-                /* Add module to the lists */
-                moduleList.add(module);
+            for (Module module : getList().getModules()) {
                 App.modulesList.add(module.getTitle());
-                line = inputFile.readLine();
             }
-            /* Close file */
-            inputFile.close();
             return "Loaded modules from file successfully.";
-        } catch (FileNotFoundException e) {
-            return "File with the modules cannot be found. Missing \"modules.txt\" in data folder.";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "IO Exception error.";
-        }
+        } else
+            return err;
     }
 }

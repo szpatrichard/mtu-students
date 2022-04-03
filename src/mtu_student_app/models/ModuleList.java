@@ -1,16 +1,22 @@
 package mtu_student_app.models;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Class used to store the records of modules, serving as the database of the
- * application.
+ * Class used to store the records of modules.
  * 
  * @author Patrik Richard Szilagyi R00198735S
  */
-public class ModuleList {
+public class ModuleList implements Serializable {
     /* Attributes */
-    private final ArrayList<Module> modules;
+    private ArrayList<Module> modules;
 
     /* ModuleList Constructor */
     public ModuleList() {
@@ -23,7 +29,7 @@ public class ModuleList {
      * @return An ArrayList with the details of the modules.
      */
     public ArrayList<Module> getModules() {
-        return modules;
+        return this.modules;
     }
 
     /**
@@ -69,7 +75,6 @@ public class ModuleList {
      */
     public void addModule(Module module) {
         boolean isModuleCodeAvailable = true;
-        System.out.println(module.getCode());
         for (Module m : modules) {
             if (m.getTitle().equals(module.getTitle()))
                 isModuleCodeAvailable = false;
@@ -95,5 +100,34 @@ public class ModuleList {
      */
     public int length() {
         return getModules().size();
+    }
+
+    public String writeObject() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("data/modules");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(modules);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.close();
+            return null;
+        } catch (IOException ie) {
+            return "Can't write modules to file.";
+        }
+    }
+
+    public String readObject() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("data/modules");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            modules = (ArrayList<Module>) objectInputStream.readObject();
+            objectInputStream.close();
+            fileInputStream.close();
+            return null;
+        } catch (FileNotFoundException e) {
+            return "File cannot be found. Missing \"modules\" in data folder.";
+        } catch (ClassNotFoundException | IOException e) {
+            return "Can't read modules from file.";
+        }
     }
 }

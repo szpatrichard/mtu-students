@@ -35,8 +35,8 @@ public class SaveWork {
         /* Handling Events */
         saveBtn.setOnAction(e -> {
             App.studentControl.saveList();
-            App.studentControl.saveResults();
             App.moduleControl.saveList();
+            App.recordControl.saveList();
             stage.close();
         });
         discardBtn.setOnAction(e -> System.exit(0));
