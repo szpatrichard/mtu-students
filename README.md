@@ -1,18 +1,21 @@
-## Getting Started
+# MTU Students
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+MTU Students is a JavaFX desktop application that allows users to store and manage student records. The application allows users to manage student, module, and record data, and provides functionality to load, save, and exit the application.
 
-## Folder Structure
+## Installation
 
-The workspace contains two folders by default, where:
+1. Clone the repository:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+```bash
+git clone https://github.com/szpatrichard/mtu-student-app.git
+```
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+2. Open the project in your preferred Java IDE.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+3. Run the `App.java` file.
 
-## Dependency Management
+Note: This project requires JavaFX to run. Please ensure that [JavaFX](https://openjfx.io/) is installed on your system before running the application.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Author
+
+MTU Students was developed by Patrik Richard Szilagyi.
